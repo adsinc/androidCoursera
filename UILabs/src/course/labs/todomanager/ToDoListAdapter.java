@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import static course.labs.todomanager.ToDoItem.Status.DONE;
+import static course.labs.todomanager.ToDoItem.Status.NOTDONE;
 
 public class ToDoListAdapter extends BaseAdapter {
 
@@ -89,12 +90,9 @@ public class ToDoListAdapter extends BaseAdapter {
 		final ToDoItem toDoItem = mItems.get(position);
 
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		RelativeLayout itemLayout = (RelativeLayout) inflater.inflate(R.layout.todo_item, null);
-
-		// TODO - Fill in specific ToDoItem data
-		// Remember that the data that goes in this View
-		// corresponds to the user interface elements defined
-		// in the layout file
+		RelativeLayout itemLayout = convertView == null
+                ? (RelativeLayout) inflater.inflate(R.layout.todo_item, null)
+                : (RelativeLayout) convertView;
 
 		final TextView titleView = (TextView) itemLayout.findViewById(R.id.titleView);
         titleView.setText(toDoItem.getTitle());
@@ -108,9 +106,7 @@ public class ToDoListAdapter extends BaseAdapter {
 					boolean isChecked) {
 				Log.i(TAG, "Entered onCheckedChanged()");
 
-				// TODO - set up an OnCheckedChangeListener, which
-				// is called when the user toggles the status checkbox
-
+                toDoItem.setStatus(isChecked ? DONE : NOTDONE);
 			}
 		});
 
