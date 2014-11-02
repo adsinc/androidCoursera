@@ -88,8 +88,9 @@ public class MainActivity extends Activity implements SelectionListener {
 
 			Log.i (TAG,"Issuing Toast Message");
 
-            Toast toast = Toast.makeText(getApplicationContext(), "Downloading Tweets from Network", Toast.LENGTH_SHORT);
-			toast.show();
+            Toast.makeText(getApplicationContext(),
+                    "Downloading Tweets from Network",
+                    Toast.LENGTH_SHORT).show();
 
 			new DownloaderTask(this).execute(URL_TSWIFT, URL_RBLACK, URL_LGAGA);
 
@@ -102,15 +103,9 @@ public class MainActivity extends Activity implements SelectionListener {
 
 					Log.i(TAG,"BroadcastIntent received in MainActivity");
 					
-					// TODO:				
-					// Check to make sure this is an ordered broadcast
-					// Let sender know that the Intent was received
-					// by setting result code to MainActivity.IS_ALIVE
+                    if(isOrderedBroadcast())
+                        setResultCode(MainActivity.IS_ALIVE);
 
-					
-
-
-					
 				}
 			};
 
