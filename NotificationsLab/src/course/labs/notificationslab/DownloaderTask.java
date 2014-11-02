@@ -152,18 +152,12 @@ public class DownloaderTask extends AsyncTask<String, Void, String[]> {
 						Log.i(TAG,
 								"Entered result receiver's onReceive() method");
 
-						// TODO: Check whether the result code is not MainActivity.IS_ALIVE
+						if (getResultCode() != MainActivity.IS_ALIVE) {
 
-						if (false || true) {
-
-							// TODO: If so, create a PendingIntent using the
-							// restartMainActivityIntent and set its flags
-							// to FLAG_UPDATE_CURRENT
-
-
-
-							
-							
+                            PendingIntent pendingIntent = mParentActivity.createPendingResult(
+                                    MY_NOTIFICATION_ID,
+                                    restartMainActivtyIntent,
+                                    PendingIntent.FLAG_UPDATE_CURRENT);
 
 							// Uses R.layout.custom_notification for the
 							// layout of the notification View. The xml
@@ -173,32 +167,16 @@ public class DownloaderTask extends AsyncTask<String, Void, String[]> {
 									mApplicationContext.getPackageName(),
 									R.layout.custom_notification);
 
-							// TODO: Set the notification View's text to
-							// reflect whether the download completed
-							// successfully
+                            mContentView.setTextViewText(R.id.text, "Download completed successfully");
 
+                            Notification notification = new Notification.Builder(mApplicationContext)
+                                    .setContent(mContentView)
+                                    .setSmallIcon(android.R.drawable.stat_sys_warning)
+                                    .setContentIntent(pendingIntent)
+                                    .setAutoCancel(true).build();
 
-
-							
-
-							// TODO: Use the Notification.Builder class to
-							// create the Notification. You will have to set
-							// several pieces of information. You can use
-							// android.R.drawable.stat_sys_warning
-							// for the small icon. You should also
-							// setAutoCancel(true).
-
-
-
-							
-							
-							
-							
-							// TODO: Send the notification
-
-
-							
-							
+                            ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE))
+                                    .notify(MY_NOTIFICATION_ID, notification);
 
 							Log.i(TAG, "Notification Area Notification sent");
 						}
