@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import android.app.NotificationManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,14 +86,10 @@ public class MainActivity extends Activity implements SelectionListener {
 
 		if (!mIsFresh) {
 
-			// TODO:
-			// Show a Toast Notification to inform user that 
-			// the app is "Downloading Tweets from Network"
 			Log.i (TAG,"Issuing Toast Message");
 
-
-			
-			
+            Toast toast = Toast.makeText(getApplicationContext(), "Downloading Tweets from Network", Toast.LENGTH_SHORT);
+			toast.show();
 
 			new DownloaderTask(this).execute(URL_TSWIFT, URL_RBLACK, URL_LGAGA);
 
