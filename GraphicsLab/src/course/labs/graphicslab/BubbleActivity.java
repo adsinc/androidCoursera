@@ -258,8 +258,7 @@ public class BubbleActivity extends Activity {
 				mScaledBitmapWidth = (r.nextInt(3) + 1) * BITMAP_SIZE;
 			}
 
-			// TODO - create the scaled bitmap using size set above
-
+			mScaledBitmap = Bitmap.createScaledBitmap(mBitmap, mScaledBitmapWidth, mScaledBitmapWidth, false);
 
 		}
 
