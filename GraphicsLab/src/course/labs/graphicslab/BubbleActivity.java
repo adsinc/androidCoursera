@@ -151,6 +151,7 @@ public class BubbleActivity extends Activity {
 				if(createBubble) {
 					BubbleView bubbleView = new BubbleView(BubbleActivity.this, event.getX(), event.getY());
 					mFrame.addView(bubbleView);
+					bubbleView.startMovement();
 				}
 				return true;
 			}
@@ -286,8 +287,8 @@ public class BubbleActivity extends Activity {
 		// Returns true if the BubbleView intersects position (x,y)
 		private synchronized boolean intersects(float x, float y) {
 
-			float xToC = mXPos - x;
-			float yToC = mYPos - y;
+			float xToC = mXPos + mRadius - x;
+			float yToC = mYPos + mRadius - y;
 
 			return (xToC * xToC + yToC * yToC) <= mRadiusSquared;
 		}
@@ -334,17 +335,17 @@ public class BubbleActivity extends Activity {
 
 			
 			// TODO - increase the rotation of the original image by mDRotate
-
+			mRotate += mDRotate;
 
 			
 			// TODO Rotate the canvas by current rotation
 			// Hint - Rotate around the bubble's center, not its position
-
+			canvas.rotate(mRotate, mXPos + mRadius, mYPos + mRadius);
 
 
 			
 			// TODO - draw the bitmap at it's new location
-
+			canvas.drawBitmap(mScaledBitmap, mXPos, mYPos, null);
 
 			
 			// TODO - restore the canvas
@@ -366,8 +367,8 @@ public class BubbleActivity extends Activity {
 		// operation
 		private boolean isOutOfView() {
 
-			return mXPos < -mRadius || mXPos > mDisplayWidth + mRadius
-					|| mYPos < -mRadius || mYPos > mDisplayHeight + mRadius;
+			return mXPos < 0 || mXPos > mDisplayWidth
+					|| mYPos < 0 || mYPos > mDisplayHeight;
 			
 		}
 	}
