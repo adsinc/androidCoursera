@@ -220,10 +220,7 @@ public class BubbleActivity extends Activity {
 
 		private void setRotation(Random r) {
 			if (speedMode == RANDOM) {
-
-				// TODO - set rotation in range [1..3]
-
-				
+				mDRotate = r.nextInt(3) + 1;
 			} else {
 				mDRotate = 0;
 			}
@@ -248,18 +245,8 @@ public class BubbleActivity extends Activity {
 				break;
 
 			default:
-
-				// TODO - Set mDx and mDy to indicate movement direction and speed 
-				// Limit speed in the x and y direction to [-3..3] pixels per movement.
-
-
-				
-				
-				
-				
-				
-				
-				
+				mDx = mDx + (3 - r.nextInt(7));
+				mDy = mDy + (3 - r.nextInt(7));
 			}
 		}
 
@@ -268,11 +255,7 @@ public class BubbleActivity extends Activity {
 			if (speedMode != RANDOM) {
 				mScaledBitmapWidth = BITMAP_SIZE * 3;
 			} else {
-
-				// TODO - set scaled bitmap size in range [1..3] * BITMAP_SIZE
-
-
-				
+				mScaledBitmapWidth = (r.nextInt(3) + 1) * BITMAP_SIZE;
 			}
 
 			// TODO - create the scaled bitmap using size set above
