@@ -142,7 +142,7 @@ public class BubbleActivity extends Activity {
 
 				for (int i = 0;i < mFrame.getChildCount(); i++) {
 					BubbleView bubbleView = (BubbleView) mFrame.getChildAt(i);
-					if(false && bubbleView.intersects(event.getX(),event.getY())) {
+					if(bubbleView.intersects(event.getX(),event.getY())) {
 						bubbleView.stopMovement(true);
 						createBubble = false;
 						break;
