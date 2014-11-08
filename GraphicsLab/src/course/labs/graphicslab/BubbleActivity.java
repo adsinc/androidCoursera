@@ -16,7 +16,6 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.*;
 import android.widget.RelativeLayout;
 
@@ -276,17 +275,10 @@ public class BubbleActivity extends Activity {
 				@Override
 				public void run() {
 
-					// TODO - implement movement logic.
-					// Each time this method is run the BubbleView should
-					// move one step. If the BubbleView exits the display,
-					// stop the BubbleView's Worker Thread.
-					// Otherwise, request that the BubbleView be redrawn.
+					if(moveWhileOnScreen())
+						stopMovement(false);
 
-
-					
-					
-					
-					
+					invalidate();
 				}
 			}, 0, REFRESH_RATE, TimeUnit.MILLISECONDS);
 		}
@@ -294,14 +286,10 @@ public class BubbleActivity extends Activity {
 		// Returns true if the BubbleView intersects position (x,y)
 		private synchronized boolean intersects(float x, float y) {
 
-			// TODO - Return true if the BubbleView intersects position (x,y)
+			float xToC = mXPos - x;
+			float yToC = mYPos - y;
 
-
-
-			
-			
-			return  true || false;
-
+			return (xToC * xToC + yToC * yToC) <= mRadiusSquared;
 		}
 
 		// Cancel the Bubble's movement
@@ -321,17 +309,10 @@ public class BubbleActivity extends Activity {
 					@Override
 					public void run() {
 
-						// TODO - Remove the BubbleView from mFrame
+						mFrame.removeView(BubbleView.this);
 
-
-						
-						// TODO - If the bubble was popped by user,
-						// play the popping sound
 						if (wasPopped) {
-
-
-
-							
+							mSoundPool.play(mSoundID, 1.0f, 1.0f, 1, 0, 1.0f);
 						}
 					}
 				});
@@ -375,13 +356,8 @@ public class BubbleActivity extends Activity {
 		// Returns true if the BubbleView is still on the screen after the move
 		// operation
 		private synchronized boolean moveWhileOnScreen() {
-
-			// TODO - Move the BubbleView
-
-
-
-			
-			
+			mXPos += mDx;
+			mYPos += mDy;
 			return isOutOfView();
 
 		}
@@ -390,12 +366,9 @@ public class BubbleActivity extends Activity {
 		// operation
 		private boolean isOutOfView() {
 
-			// TODO - Return true if the BubbleView is still on the screen after
-			// the move operation
-
+			return mXPos < -mRadius || mXPos > mDisplayWidth + mRadius
+					|| mYPos < -mRadius || mYPos > mDisplayHeight + mRadius;
 			
-			return true || false;
-
 		}
 	}
 
