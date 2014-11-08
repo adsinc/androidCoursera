@@ -17,11 +17,7 @@ import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
+import android.view.*;
 import android.widget.RelativeLayout;
 
 public class BubbleActivity extends Activity {
@@ -142,23 +138,21 @@ public class BubbleActivity extends Activity {
 			@Override
 			public boolean onSingleTapConfirmed(MotionEvent event) {
 
-				// TODO - Implement onSingleTapConfirmed actions.
-				// You can get all Views in mFrame using the
-				// ViewGroup.getChildCount() method
+				boolean createBubble = true;
 
-
+				for (int i = 0;i < mFrame.getChildCount(); i++) {
+					BubbleView bubbleView = (BubbleView) mFrame.getChildAt(i);
+					if(false && bubbleView.intersects(event.getX(),event.getY())) {
+						bubbleView.stopMovement(true);
+						createBubble = false;
+						break;
+					}
+				}
 				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+				if(createBubble) {
+					BubbleView bubbleView = new BubbleView(BubbleActivity.this, event.getX(), event.getY());
+					mFrame.addView(bubbleView);
+				}
 				return true;
 			}
 		});
@@ -167,28 +161,15 @@ public class BubbleActivity extends Activity {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 
-		// TODO - Delegate the touch to the gestureDetector
+		return mGestureDetector.onTouchEvent(event);
 
-		
-
-		
-		
-		
-		
-		return true || false;
-		
 	}
 
 	@Override
 	protected void onPause() {
 
-		// TODO - Release all SoundPool resources
+		mSoundPool.release();
 
-
-
-		
-		
-		
 		super.onPause();
 	}
 
