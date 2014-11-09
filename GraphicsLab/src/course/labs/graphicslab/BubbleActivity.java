@@ -150,8 +150,8 @@ public class BubbleActivity extends Activity {
 				
 				if(createBubble) {
 					BubbleView bubbleView = new BubbleView(BubbleActivity.this, event.getX(), event.getY());
-					mFrame.addView(bubbleView);
 					bubbleView.startMovement();
+					mFrame.addView(bubbleView);
 				}
 				return true;
 			}
@@ -279,7 +279,7 @@ public class BubbleActivity extends Activity {
 					if(moveWhileOnScreen())
 						stopMovement(false);
 
-					invalidate();
+					postInvalidate();
 				}
 			}, 0, REFRESH_RATE, TimeUnit.MILLISECONDS);
 		}
@@ -330,28 +330,15 @@ public class BubbleActivity extends Activity {
 		@Override
 		protected synchronized void onDraw(Canvas canvas) {
 
-			// TODO - save the canvas
+			canvas.save();
 
-
-			
-			// TODO - increase the rotation of the original image by mDRotate
 			mRotate += mDRotate;
 
-			
-			// TODO Rotate the canvas by current rotation
-			// Hint - Rotate around the bubble's center, not its position
 			canvas.rotate(mRotate, mXPos + mRadius, mYPos + mRadius);
 
-
-			
-			// TODO - draw the bitmap at it's new location
 			canvas.drawBitmap(mScaledBitmap, mXPos, mYPos, null);
 
-			
-			// TODO - restore the canvas
-
-
-			
+			canvas.restore();
 		}
 
 		// Returns true if the BubbleView is still on the screen after the move
@@ -367,8 +354,8 @@ public class BubbleActivity extends Activity {
 		// operation
 		private boolean isOutOfView() {
 
-			return mXPos < 0 || mXPos > mDisplayWidth
-					|| mYPos < 0 || mYPos > mDisplayHeight;
+			return mXPos + mScaledBitmapWidth  < 0 || mXPos > mDisplayWidth
+					|| mYPos + mScaledBitmapWidth < 0 || mYPos > mDisplayHeight;
 			
 		}
 	}
