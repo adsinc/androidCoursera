@@ -116,16 +116,13 @@ public class BubbleActivity extends Activity {
 			public boolean onFling(MotionEvent event1, MotionEvent event2,
 					float velocityX, float velocityY) {
 
-				// TODO - Implement onFling actions.
-				// You can get all Views in mFrame one at a time
-				// using the ViewGroup.getChildAt() method
-
-
-				
-				
-				
-				
-				
+				for (int i = 0;i < mFrame.getChildCount(); i++) {
+					BubbleView bubbleView = (BubbleView) mFrame.getChildAt(i);
+					if(bubbleView.intersects(event1.getX(),event1.getY())) {
+						bubbleView.deflect(velocityX, velocityY);
+						break;
+					}
+				}
 				return true;
 			}
 
