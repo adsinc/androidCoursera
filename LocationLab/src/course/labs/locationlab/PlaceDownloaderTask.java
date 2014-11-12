@@ -37,9 +37,9 @@ public class PlaceDownloaderTask extends AsyncTask<Location, Void, PlaceRecord> 
 	// Log TAG
 	private static final String TAG = "PlaceDownloaderTask";
 
-	// Optional TODO - Put your www.geonames.org account name here if you want to
+	// Optional Put your www.geonames.org account name here if you want to
 	// use the geonames.org web service. To use this service, you must register for a free account.
-	private static String USERNAME = "YOUR_ACCOUNT_NAME";
+	private static String USERNAME = "sinc";
 
 	private HttpURLConnection mHttpUrl;
 	private WeakReference<PlaceViewActivity> mParent;
