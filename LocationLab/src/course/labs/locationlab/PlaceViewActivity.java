@@ -74,7 +74,13 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 				Log.i(TAG, "Entered footerView.OnClickListener.onClick()");
 
 
-				
+				if(mLastLocationReading == null) {
+					arg0.setEnabled(false);
+					mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, mMinTime, mMinDistance, PlaceViewActivity.this);
+					arg0.setEnabled(true);
+				} else {
+					Toast.makeText(PlaceViewActivity.this, "You already have this location badge.", Toast.LENGTH_SHORT).show();
+				}
 				
 				
 				
