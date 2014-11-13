@@ -80,23 +80,15 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 					mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, mMinTime, mMinDistance, PlaceViewActivity.this);
 					arg0.setEnabled(true);
 				} else {
-					Toast.makeText(PlaceViewActivity.this, "You already have this location badge.", Toast.LENGTH_SHORT).show();
+					for(PlaceRecord placeRecord : mAdapter.getList()) {
+						if(placeRecord.intersects(mLastLocationReading)) {
+							Toast.makeText(PlaceViewActivity.this, "You already have this location badge.", Toast.LENGTH_SHORT).show();
+							return;
+						}
+					}
+					new PlaceDownloaderTask(PlaceViewActivity.this, sHasNetwork).execute(mLastLocationReading);
 				}
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+
 			}
 
 		});
@@ -114,7 +106,7 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 		startMockLocationManager();
 
 		Location location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		if(ageInMilliseconds(location) < FIVE_MINS)
+		if(location != null && ageInMilliseconds(location) < FIVE_MINS)
 			mLastLocationReading = location;
 		else
 			mLastLocationReading = null;
@@ -167,6 +159,7 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 		if(mLastLocationReading == null || mLastLocationReading.getTime() < currentLocation.getTime())
 			mLastLocationReading = currentLocation;
 
+//		new PlaceDownloaderTask(PlaceViewActivity.this, sHasNetwork).execute(mLastLocationReading);
 	}
 
 	@Override
