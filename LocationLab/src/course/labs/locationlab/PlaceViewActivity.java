@@ -114,12 +114,11 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 		startMockLocationManager();
 
 		Location location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		if(System.currentTimeMillis() / 1000 - location.getTime() < FIVE_MINS)
+		if(ageInMilliseconds(location) < FIVE_MINS)
 			mLastLocationReading = location;
 		else
 			mLastLocationReading = null;
 
-		// TODO - register to receive location updates from NETWORK_PROVIDER
 		mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, mMinTime, mMinDistance, PlaceViewActivity.this);
 
 	}
