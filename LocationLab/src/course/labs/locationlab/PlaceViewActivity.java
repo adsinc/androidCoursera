@@ -5,7 +5,6 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -150,7 +149,7 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 
 		if(place == null)
 			Toast.makeText(this, "PlaceBadge could not be acquired", Toast.LENGTH_SHORT).show();
-		else if(place.getCountryName() == null)
+		else if(place.getCountryName() == null || place.getCountryName().trim().length() == 0)
 			Toast.makeText(this, "There is no country at this location", Toast.LENGTH_SHORT).show();
 		else mAdapter.add(place);
 	}
