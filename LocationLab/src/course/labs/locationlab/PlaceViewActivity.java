@@ -50,9 +50,9 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 		// add a footerView to the ListView
 		// You can use footer_view.xml to define the footer
 
-		View footerView = View.inflate(this, R.layout.footer_view, null);
+		final View footerView = View.inflate(this, R.layout.footer_view, null);
 
-		// TODO - footerView must respond to user clicks, handling 3 cases:
+		// footerView must respond to user clicks, handling 3 cases:
 
 		// There is no current location - response is up to you. One good 
 		// solution is to disable the footerView until you have acquired a
@@ -76,9 +76,7 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 
 
 				if(mLastLocationReading == null) {
-					arg0.setEnabled(false);
 					mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, mMinTime, mMinDistance, PlaceViewActivity.this);
-					arg0.setEnabled(true);
 				} else {
 					for(PlaceRecord placeRecord : mAdapter.getList()) {
 						if(placeRecord.intersects(mLastLocationReading)) {
@@ -143,10 +141,15 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 		
 		// Otherwise - add the PlaceBadge to the adapter
 
+		for(PlaceRecord placeRecord : mAdapter.getList()) {
+			if(placeRecord.intersects(mLastLocationReading)) {
+				Toast.makeText(this, "You already have this location badge.", Toast.LENGTH_SHORT).show();
+				return;
+			}
+		}
+
 		if(place == null)
 			Toast.makeText(this, "PlaceBadge could not be acquired", Toast.LENGTH_SHORT).show();
-		else if(place.intersects(mLastLocationReading))
-			Toast.makeText(this, "You already have this location badge.", Toast.LENGTH_SHORT).show();
 		else if(place.getCountryName() == null)
 			Toast.makeText(this, "There is no country at this location", Toast.LENGTH_SHORT).show();
 		else mAdapter.add(place);
@@ -158,7 +161,7 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 
 		if(mLastLocationReading == null || mLastLocationReading.getTime() < currentLocation.getTime()) {
 			mLastLocationReading = currentLocation;
-			new PlaceDownloaderTask(PlaceViewActivity.this, sHasNetwork).execute(mLastLocationReading);
+			new PlaceDownloaderTask(PlaceViewActivity.this, sHasNetwork).execute(currentLocation);
 		}
 	}
 
