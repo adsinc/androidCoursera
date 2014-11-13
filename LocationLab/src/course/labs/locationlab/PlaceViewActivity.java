@@ -136,8 +136,6 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 	public void addNewPlace(PlaceRecord place) {
 		Log.i(TAG, "Entered addNewPlace()");
 
-		// TODO - Attempt to add place to the adapter, considering the following cases
-
 		// A PlaceBadge for this location already exists. In this case issue a Toast message
 		// with the text - "You already have this location badge." Use the PlaceRecord 
 		// class' intersects() method to determine whether a PlaceBadge already exists
@@ -152,25 +150,14 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 		// Do not add the PlaceBadge to the adapter
 		
 		// Otherwise - add the PlaceBadge to the adapter
-		
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		if(place == null)
+			Toast.makeText(this, "PlaceBadge could not be acquired", Toast.LENGTH_SHORT).show();
+		else if(place.intersects(mLastLocationReading))
+			Toast.makeText(this, "You already have this location badge.", Toast.LENGTH_SHORT).show();
+		else if(place.getCountryName() == null)
+			Toast.makeText(this, "There is no country at this location", Toast.LENGTH_SHORT).show();
+		else mAdapter.add(place);
 	}
 
 	// LocationListener methods
