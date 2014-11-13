@@ -113,19 +113,15 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 
 		startMockLocationManager();
 
-		// TODO - Check NETWORK_PROVIDER for an existing location reading.
-		// Only keep this last reading if it is fresh - less than 5 minutes old
-
 		Location location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		if(System.currentTimeMillis() / 1000 - location.getTime() < FIVE_MINS)
 			mLastLocationReading = location;
-		
+		else
+			mLastLocationReading = null;
 
 		// TODO - register to receive location updates from NETWORK_PROVIDER
 		mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, mMinTime, mMinDistance, PlaceViewActivity.this);
 
-		
-		
 	}
 
 	@Override
@@ -182,22 +178,9 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 	@Override
 	public void onLocationChanged(Location currentLocation) {
 
-		// TODO - Update last location considering the following cases.
-		// 1) If there is no last location, set the last location to the current
-		// location.
-		// 2) If the current location is older than the last location, ignore
-		// the current location
-		// 3) If the current location is newer than the last locations, keep the
-		// current location.
+		if(mLastLocationReading == null || mLastLocationReading.getTime() < currentLocation.getTime())
+			mLastLocationReading = currentLocation;
 
-		
-		
-		
-		
-		
-		
-		mLastLocationReading = null;
-		
 	}
 
 	@Override
