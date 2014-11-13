@@ -156,10 +156,10 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 	@Override
 	public void onLocationChanged(Location currentLocation) {
 
-		if(mLastLocationReading == null || mLastLocationReading.getTime() < currentLocation.getTime())
+		if(mLastLocationReading == null || mLastLocationReading.getTime() < currentLocation.getTime()) {
 			mLastLocationReading = currentLocation;
-
-//		new PlaceDownloaderTask(PlaceViewActivity.this, sHasNetwork).execute(mLastLocationReading);
+			new PlaceDownloaderTask(PlaceViewActivity.this, sHasNetwork).execute(mLastLocationReading);
+		}
 	}
 
 	@Override
