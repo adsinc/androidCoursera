@@ -122,7 +122,7 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 		
 
 		// TODO - register to receive location updates from NETWORK_PROVIDER
-
+		mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, mMinTime, mMinDistance, PlaceViewActivity.this);
 
 		
 		
@@ -131,11 +131,8 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 	@Override
 	protected void onPause() {
 
-		// TODO - unregister for location updates
+		mLocationManager.removeUpdates(this);
 
-
-		
-		
 		shutdownMockLocationManager();
 		super.onPause();
 	}
