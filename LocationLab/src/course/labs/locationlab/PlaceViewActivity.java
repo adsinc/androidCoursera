@@ -5,6 +5,7 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -115,10 +116,9 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 		// TODO - Check NETWORK_PROVIDER for an existing location reading.
 		// Only keep this last reading if it is fresh - less than 5 minutes old
 
-		
-		
-		
-		mLastLocationReading = null;
+		Location location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		if(System.currentTimeMillis() / 1000 - location.getTime() < FIVE_MINS)
+			mLastLocationReading = location;
 		
 
 		// TODO - register to receive location updates from NETWORK_PROVIDER
