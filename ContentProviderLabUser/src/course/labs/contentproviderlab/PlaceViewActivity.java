@@ -64,16 +64,7 @@ public class PlaceViewActivity extends ListActivity implements
 
 		mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		
-
-		// TODO - add a footerView to the ListView
-		// You can use footer_view.xml to define the footer
-		
-		View footerView = null;
-		
-		// Can be removed after implementing the TODO above
-		if (null == footerView ) {
-			return;
-		}
+		View footerView = getLayoutInflater().inflate(R.layout.footer_view, null);
 
 		// TODO - footerView must respond to user clicks, handling 3 cases:
 
@@ -96,7 +87,9 @@ public class PlaceViewActivity extends ListActivity implements
 			public void onClick(View view) {
 
 				
-				
+				if(mLastLocationReading == null) {
+
+				}
 				
 				
 				
