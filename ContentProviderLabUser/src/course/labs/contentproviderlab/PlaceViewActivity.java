@@ -106,8 +106,8 @@ public class PlaceViewActivity extends ListActivity implements
 		mCursorAdapter = new PlaceViewAdapter(this, null, PlaceViewAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
 		// TODO - Initialize the loader
-		
-		
+
+
 	}
 
 	@Override
@@ -218,10 +218,7 @@ public class PlaceViewActivity extends ListActivity implements
 	// LoaderCallback methods
 	@Override
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-
-		
-		// TODO - Create a new CursorLoader and return it
-		return null;
+		return new CursorLoader(this);
 	}
 
 	@Override
