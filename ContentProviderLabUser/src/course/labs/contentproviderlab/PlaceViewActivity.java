@@ -27,7 +27,7 @@ public class PlaceViewActivity extends ListActivity implements
 	private static String TAG = "Lab-ContentProvider";
 
 	// False if you don't have network access
-	public static boolean sHasNetwork = false;
+	public static boolean sHasNetwork = true;
 
 	private boolean mMockLocationOn = false;
 
@@ -66,7 +66,7 @@ public class PlaceViewActivity extends ListActivity implements
 		
 		View footerView = getLayoutInflater().inflate(R.layout.footer_view, null);
 
-		// TODO - footerView must respond to user clicks, handling 3 cases:
+		// footerView must respond to user clicks, handling 3 cases:
 
 		// There is no current location - response is up to you. The best
 		// solution is to always disable the footerView until you have a
@@ -86,36 +86,24 @@ public class PlaceViewActivity extends ListActivity implements
 			@Override
 			public void onClick(View view) {
 
-				
 				if(mLastLocationReading == null) {
-
+					mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, mMinTime, mMinDistance, PlaceViewActivity.this);
+				} else {
+					for(PlaceRecord placeRecord : mCursorAdapter.getList())
+						if(placeRecord.intersects(mLastLocationReading)) {
+							Toast.makeText(PlaceViewActivity.this, "You already have this location badge.", Toast.LENGTH_SHORT).show();
+							return;
+						}
+					new PlaceDownloaderTask(PlaceViewActivity.this, sHasNetwork).execute(mLastLocationReading);
 				}
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+
 			}
 
 		});
 
 		getListView().addFooterView(footerView);
 
-		// TODO - Create and set empty PlaceViewAdapter
-		mCursorAdapter = null;
+		mCursorAdapter = new PlaceViewAdapter(this, null, PlaceViewAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
 		// TODO - Initialize the loader
 		
@@ -147,8 +135,7 @@ public class PlaceViewActivity extends ListActivity implements
 	@Override
 	protected void onPause() {
 
-		// TODO - unregister for location updates
-
+		mLocationManager.removeUpdates(this);
 		
 		
 		shutdownMockLocationManager();
