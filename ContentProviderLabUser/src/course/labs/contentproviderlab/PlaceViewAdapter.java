@@ -16,6 +16,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.UserDictionary;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,23 +58,16 @@ public class PlaceViewAdapter extends CursorAdapter {
 	@Override
 	public Cursor swapCursor(Cursor newCursor) {
 
-		// TODO - clear the ArrayList list so it contains
+		// clear the ArrayList list so it contains
 		// the current set of PlaceRecords. Use the
 		// getPlaceRecordFromCursor() method as you add the
 		// cursor's places to the list
 
+		getList().clear();
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+		getList().add(getPlaceRecordFromCursor(newCursor));
 
+		return getCursor();
 	}
 
 	// Returns a new PlaceRecord for the data at the cursor's
@@ -140,18 +134,14 @@ public class PlaceViewAdapter extends CursorAdapter {
 
 			ContentValues values = new ContentValues();
 
-			// TODO - Insert new record into the ContentProvider
+			// Insert new record into the ContentProvider
+			values.put(PlaceBadgesContract.FLAG_BITMAP_PATH, listItem.getFlagBitmapPath());
+			values.put(PlaceBadgesContract.COUNTRY_NAME, listItem.getCountryName());
+			values.put(PlaceBadgesContract.PLACE_NAME, listItem.getPlace());
+			values.put(PlaceBadgesContract.LAT, listItem.getLocation().getLatitude());
+			values.put(PlaceBadgesContract.LON, listItem.getLocation().getLongitude());
+			mContext.getContentResolver().insert(PlaceBadgesContract.CONTENT_URI, values);
 
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
         }
 
 	}
@@ -163,10 +153,9 @@ public class PlaceViewAdapter extends CursorAdapter {
 	public void removeAllViews() {
 		mPlaceRecords.clear();
 
-		// TODO - delete all records in the ContentProvider
+		// delete all records in the ContentProvider
+		mContext.getContentResolver().delete(PlaceBadgesContract.CONTENT_URI, null, null);
 
-        
-        
 	}
 
 	@Override
