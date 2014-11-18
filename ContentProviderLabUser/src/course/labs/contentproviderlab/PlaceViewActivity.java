@@ -223,22 +223,14 @@ public class PlaceViewActivity extends ListActivity implements
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> newLoader, Cursor newCursor) {
-
-		
-		// TODO - Swap in the newCursor
-
-	
-	
+		// Swap in the newCursor
+		mCursorAdapter.swapCursor(newCursor);
 	}
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> newLoader) {
-
-		
-		// TODO - swap in a null Cursor
-
-	
-	
+		// swap in a null Cursor
+		 mCursorAdapter.swapCursor(null);
 	}
 
 	// Returns age of location in milliseconds
