@@ -16,7 +16,6 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.UserDictionary;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,11 +63,10 @@ public class PlaceViewAdapter extends CursorAdapter {
 		// cursor's places to the list
 
 		getList().clear();
-		if(newCursor != null && newCursor.moveToFirst()){
-			while(newCursor.moveToNext()){
-				mPlaceRecords.add(getPlaceRecordFromCursor(newCursor));
-			}
-		}
+
+		while(newCursor != null && newCursor.moveToNext())
+			mPlaceRecords.add(getPlaceRecordFromCursor(newCursor));
+
 		return super.swapCursor(newCursor);
 	}
 
