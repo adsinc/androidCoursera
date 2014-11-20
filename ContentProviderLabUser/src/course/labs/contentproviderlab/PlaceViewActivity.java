@@ -209,6 +209,7 @@ public class PlaceViewActivity extends ListActivity implements
 	@Override
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
 		String[] proj = {
+				PlaceBadgesContract._ID,
 				PlaceBadgesContract.FLAG_BITMAP_PATH,
 				PlaceBadgesContract.COUNTRY_NAME,
 				PlaceBadgesContract.PLACE_NAME,

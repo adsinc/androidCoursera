@@ -64,10 +64,12 @@ public class PlaceViewAdapter extends CursorAdapter {
 		// cursor's places to the list
 
 		getList().clear();
-		if(newCursor != null && newCursor.getPosition() >= 0) {
-			getList().add(getPlaceRecordFromCursor(newCursor));
+		if(newCursor != null && newCursor.moveToFirst()){
+			while(newCursor.moveToNext()){
+				mPlaceRecords.add(getPlaceRecordFromCursor(newCursor));
+			}
 		}
-		return newCursor;
+		return super.swapCursor(newCursor);
 	}
 
 	// Returns a new PlaceRecord for the data at the cursor's
